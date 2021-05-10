@@ -77,10 +77,72 @@ y_test = y[rnd_indices[-test_size:]]
 
 ## 3. 로지스틱 함수 구현
 
-```
+```python
 def logistic_sigmoid(x): # 시그모이드 함수 정의
     return 1 / (1 + np.exp(-x))
 ```
+
+## 4. 경사하강법 활용 훈련
+
+```
+n_inputs = X_train.shape[1]           # 특성 수(n) + 1, 붓꽃의 경우: 특성 2개 + 1
+n_outputs = len(np.unique(y_train))   # 중복을 제거한 클래스 수(K), 붓꽃의 경우: 3개
+```
+
+### 파라미터를 무작위로 초기 설정
+
+```
+Theta = np.random.randn(n_inputs, 1)
+```
+
+### 배치경사하강법 구현
+
+```
+eta = 0.01
+n_iterations = 5001
+m = len(X_train)
+epsilon = 1e-7
+y_train = y_train.reshape(90,1)
+
+for iteration in range(n_iterations):     # 5001번 반복 훈련
+    logits = X_train.dot(Theta)
+    Y_proba = logistic_sigmoid(logits)
+    
+    if iteration % 500 == 0:              # 500 에포크마다 손실(비용) 계산해서 출력
+        loss = -1/m*(np.sum(y_train * np.log(Y_proba + epsilon) + (1 - y_train) * np.log(1 - Y_proba + epsilon)))
+        print(iteration, loss)
+
+    Y_proba = np.where(Y_proba >= 0.5, 1, 0)
+    #print(Y_proba)
+    
+    error = Y_proba - y_train     # 그레이디언트 계산.
+    #print(error)
+    gradients = 1/m * X_train.T.dot(error)
+    
+    Theta = Theta - eta * gradients       # 파라미터 업데이트
+```
+###
+0 0.7367920641625514
+500 0.6913052093118407
+1000 0.6914566500022249
+1500 0.6913969427170582
+2000 0.6915484030341011
+2500 0.6914886904050195
+3000 0.6914289977295667
+3500 0.6913583974477105
+4000 0.6915098561489456
+4500 0.6914501370427001
+5000 0.6913904378900846
+
+### 학습된 파라미터
+
+```
+Theta
+```
+###
+array([[-0.00836306],
+       [ 0.00500979]])
+
 
 ### 1-1. 제목 정렬
 
