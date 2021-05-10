@@ -143,93 +143,153 @@ Theta
 array([[-0.00836306],
        [ 0.00500979]])
 
+### 배치경사하강법에 대한 정확성 점수 계산
 
-### 1-1. 제목 정렬
-
-##### 왼쪽(기본)
-
-##### 가운데
-{: .center}
-
-##### 오른쪽
-{: .right}
-
-## 2. 본문 
-
-탄핵소추의 의결을 받은 자는 탄핵심판이 있을 때까지 [링크](#) 그 권한행사가 정지된다. 제2항과 제3항의 처분에 대하여는 **굵게** 법원에 제소할 수 없다. 선거와 국민투표의 공정한 관리 *기울임* 및 정당에 관한 사무를 처리하기 위하여 5<sup>3</sup> = 125 선거관리위원회를 둔다. 국무총리는 대통령을 보좌하며, H<sub>2</sub>O 행정에 관하여 대통령의 명을 받아 행정각부를 통할한다. 정당은 법률이 정하는 바에 의하여 <u>밑줄</u> 국가의 보호를 받으며, 국가는 법률이 정하는 바에 의하여 `파일명` 정당운영에 필요한 자금을 보조할 수 있다. 모든 국민은 종교의 자유를 가진다. 국회의원은 법률이 정하는 직을 겸할 수 없다. 감사원은 <del>가운데 줄</del> 세입·세출의 결산을 매년 검사하여 대통령과 차년도국회에 <mark>형광펜</mark> 그 결과를 보고하여야 한다.
-
-## 3. 이미지
-
-![큰 이미지](http://placehold.it/800x400)
-![중간 이미지](http://placehold.it/400x200)
-![작은 이미지](http://placehold.it/200x200)
-
-### 3-1. 이미지 가운데 정렬
-![이미지 가운데 정렬](http://placehold.it/200x200){: .center-image}
-
-## 4. 인용구
-
-> 나는 헌법을 준수하고 국가를 보위하며 조국의 평화적 통일과 국민의 자유와 복리의 증진 및 민족문화의 창달에 노력하여 대통령으로서의 직책을 성실히 수행할 것을 국민 앞에 엄숙히 선서합니다. 모든 국민은 통신의 비밀을 침해받지 아니한다. 국회의원은 법률이 정하는 직을 겸할 수 없다. 국회는 헌법 또는 법률에 특별한 규정이 없는 한 재적의원 과반수의 출석과 출석의원 과반수의 찬성으로 의결한다. 가부동수인 때에는 부결된 것으로 본다.
-
-## 5. 리스트
-
-### 순서가 없는 리스트
-
-* 국가원로자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다.
-* 모든 국민은 법률이 정하는 바에 의하여 국방의 의무를 진다.
-* 탄핵소추의 의결을 받은 자는 탄핵심판이 있을 때까지 그 권한행사가 정지된다.
-  1. 국회는 의원의 자격을 심사하며, 의원을 징계할 수 있다. 국가는 모성의 보호를 위하여 노력하여야 한다.
-  2. 공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다.
-* 국회는 의장 1인과 부의장 2인을 선출한다. 정부는 회계연도마다 예산안을 편성하여 회계연도 개시 90일전까지 국회에 제출하고, 국회는 회계연도 개시 30일전까지 이를 의결하여야 한다.
-
-### 순서가 있는 리스트
-
-1. 대통령으로 선거될 수 있는 자는 국회의원의 피선거권이 있고 선거일 현재 40세에 달하여야 한다.
-2. 각급 선거관리위원회는 선거인명부의 작성등 선거사무와 국민투표사무에 관하여 관계 행정기관에 필요한 지시를 할 수 있다.
-3. 예비비는 총액으로 국회의 의결을 얻어야 한다. 예비비의 지출은 차기국회의 승인을 얻어야 한다.
-  * 국가는 농지에 관하여 경자유전의 원칙이 달성될 수 있도록 노력하여야 하며, 농지의 소작제도는 금지된다.
-  * 모든 국민은 법률이 정하는 바에 의하여 납세의 의무를 진다.
-4. 형사피의자 또는 형사피고인으로서 구금되었던 자가 법률이 정하는 불기소처분을 받거나 무죄판결을 받은 때에는 법률이 정하는 바에 의하여 국가에 정당한 보상을 청구할 수 있다.
-
-### 정의 리스트
-
-대통령은 제3항과 제4
-: 국회의원은 그 지위를 남용하여 국가·공공단체 또는 기업체와의 계약이나 그 처분에 의하여 재산상의 권리·이익 또는 직위를 취득하거나 타인을 위하여 그 취득을 알선할 수 없다.
-
-체포·구속·압수 또
-: 헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여 국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을 얻어야 한다.
-
-## 6. 표
-
-| 상단1 | 상단2 | 상단3 |
-|:-----|:----:|-----:|
-| 셀1  | 셀2  | 셀3  |
-| 셀4  | 셀5  | 셀6  |
-|----
-| 셀1  | 셀2  | 셀3  |
-| 셀4  | 셀5  | 셀6  |
-|=====
-| 하단1   | 하단2 | 하단3 |
-
-
-## 7. 코드 스타일
-
-### 코드 하이라이팅
-
-```css
-#container {
-  float: left;
-  margin: 0 -240px 0 0;
-  width: 100%;
-}
 ```
+logits = X_valid.dot(Theta)              
+Y_proba = logistic_sigmoid(logits)
+Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
+y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
 
-### 일반적인 코드
+y_valid = y_valid.reshape(30,1)
 
-    <div id="awesome">
-      <p>This is great isn't it?</p>
-    </div>
+accuracy_score = np.mean(y_predict == y_valid)  # 정확도 계산
+accuracy_score
+```
+###
+0.9666666666666667
 
+## 5. 규제가 추가된 경사하강법 활용 훈련
+
+```
+eta = 0.1
+n_iterations = 5001
+m = len(X_train)
+epsilon = 1e-7
+alpha = 0.1        # 규제 하이퍼파라미터
+y_train = y_train.reshape(90,1)
+
+Theta = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
+
+for iteration in range(n_iterations):
+    logits = X_train.dot(Theta)
+    Y_proba = logistic_sigmoid(logits)
+    
+    if iteration % 500 == 0:
+        xentropy_loss = -1/m*(np.sum(y_train * np.log(Y_proba + epsilon) + (1 - y_train) * np.log(1 - Y_proba + epsilon)))
+        l2_loss = 1/2 * np.sum(np.square(Theta[1:]))  # 편향은 규제에서 제외
+        loss = xentropy_loss + alpha * l2_loss        # l2 규제가 추가된 손실
+        print(iteration, loss)
+    
+    error = Y_proba - y_train
+    l2_loss_gradients = np.r_[np.zeros([1, 1]), alpha * Theta[1:]]   # l2 규제 그레이디언트
+    gradients = 1/m * X_train.T.dot(error) + l2_loss_gradients
+    
+    Theta = Theta - eta * gradients
+```
+###
+0 0.6618882978672164   
+500 0.46565264086886404   
+1000 0.4649817170971969   
+1500 0.4649761853058078   
+2000 0.4649761373560999   
+2500 0.46497613693929357   
+3000 0.46497613693573697   
+3500 0.46497613693571294   
+4000 0.4649761369357133   
+4500 0.46497613693571344   
+5000 0.4649761369357135   
+
+### 규제가 추가된 경사하강법에 대한 정확성 점수
+
+```
+logits = X_valid.dot(Theta)
+Y_proba = logistic_sigmoid(logits)
+Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
+y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+
+accuracy_score = np.mean(y_predict == y_valid)
+accuracy_score
+```
+###
+0.9
+
+## 6. 조기 종료 추가
+
+```
+eta = 0.005
+n_iterations = 5001
+m = len(X_train)
+epsilon = 1e-7
+alpha = 0.1            # 규제 하이퍼파라미터
+best_loss = np.infty   # 최소 손실값 기억 변수
+
+Theta = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
+
+for iteration in range(n_iterations):
+    # 훈련 및 손실 계산
+    logits = X_train.dot(Theta)
+    Y_proba = logistic_sigmoid(logits)
+    error = Y_proba - y_train
+    gradients = 1/m * X_train.T.dot(error) + np.r_[np.zeros([1, 1]), alpha * Theta[1:]]
+    Theta = Theta - eta * gradients
+
+    # 검증 세트에 대한 손실 계산
+    logits = X_valid.dot(Theta)
+    Y_proba_veri = logistic_sigmoid(logits)
+    xentropy_loss = -1/m*(np.sum(y_valid * np.log(Y_proba_veri + epsilon) + (1 - y_valid) * np.log(1 - Y_proba_veri + epsilon)))
+    l2_loss = 1/2 * np.sum(np.square(Theta[1:]))
+    loss = xentropy_loss + alpha * l2_loss
+    
+    # 500 에포크마다 검증 세트에 대한 손실 출력
+    if iteration % 500 == 0:
+        print(iteration, loss)
+        
+    # 에포크마다 최소 손실값 업데이트
+    if loss < best_loss:
+        best_loss = loss
+    else:                                      # 에포크가 줄어들지 않으면 바로 훈련 종료
+        print(iteration - 1, best_loss)        # 종료되지 이전 에포크의 손실값 출력
+        print(iteration, loss, "조기 종료!")
+        break
+```
+###
+0 0.3316323837797527   
+500 0.20318737444537002   
+1000 0.19243960621537481   
+1500 0.1880646732824296   
+2000 0.1861265275676014   
+2395 0.18574640481491134   
+2396 0.18574640666650474 조기 종료!
+
+### 조기종료가 추가된 검증세트에 대한 정확도 점수 계산
+
+```
+logits = X_valid.dot(Theta)
+Y_proba = logistic_sigmoid(logits)
+Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
+y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+
+accuracy_score = np.mean(y_predict == y_valid)
+accuracy_score
+```
+###
+0.9
+
+## 7. 테스트 세트 평가
+
+```
+logits = X_test.dot(Theta)
+Y_proba = logistic_sigmoid(logits)
+Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
+y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+
+y_test = y_test.reshape(30,1)
+
+accuracy_score = np.mean(y_predict == y_test)
+accuracy_score
+```
+###
+0.9
 --- 
-
 이 문서는 [한글 Lorem Ipsum](http://guny.kr/stuff/klorem/)으로 생성되었습니다.
