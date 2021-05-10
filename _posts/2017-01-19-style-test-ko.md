@@ -16,12 +16,12 @@ share: true
 
 ### 모듈 불러오기
 
-'''css
+```css
 import numpy as np
 form sklearn import datasets
 import pandas as pd
 iris = datasets.load_iris()
-'''
+```
 
 ### 1-1. 제목 정렬
 
