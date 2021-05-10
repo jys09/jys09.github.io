@@ -16,7 +16,7 @@ share: true
 
 ### 모듈 불러오기
 
-```python
+```
 import numpy as np
 form sklearn import datasets
 import pandas as pd
@@ -40,6 +40,46 @@ X_with_bias = np.c_[np.ones([len(X), 1]), X]
 
 ```
 np.random.seed(2042)
+```
+
+## 2. 데이터셋 분할
+
+### 데이터셋 분할 비율 설정
+
+```
+test_ratio = 0.2                                         # 테스트 세트 비율 = 20%
+validation_ratio = 0.2                                   # 검증 세트 비율 = 20%
+total_size = len(X_with_bias)                            # 전체 데이터셋 크기
+
+test_size = int(total_size * test_ratio)                 # 테스트 세트 크기: 전체의 20%
+validation_size = int(total_size * validation_ratio)     # 검증 세트 크기: 전체의 20%
+train_size = total_size - test_size - validation_size    # 훈련 세트 크기: 전체의 60%
+```
+
+### 인덱스 무작위로 섞기
+
+```
+rnd_indices = np.random.permutation(total_size)
+```
+
+### 6:2:2 비율로 훈련, 검증, 테스트 세트를 분할
+
+```
+X_train = X_with_bias[rnd_indices[:train_size]]
+y_train = y[rnd_indices[:train_size]]
+
+X_valid = X_with_bias[rnd_indices[train_size:-test_size]]
+y_valid = y[rnd_indices[train_size:-test_size]]
+
+X_test = X_with_bias[rnd_indices[-test_size:]]
+y_test = y[rnd_indices[-test_size:]]
+```
+
+## 3. 로지스틱 함수 구현
+
+```
+def logistic_sigmoid(x): # 시그모이드 함수 정의
+    return 1 / (1 + np.exp(-x))
 ```
 
 ### 1-1. 제목 정렬
