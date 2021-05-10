@@ -3,7 +3,7 @@ layout: post
 title: "4차과제 1번"
 description: "로지스틱 회귀를 구현하기."
 date: 2021-05-11
-*/tags: [샘플 포스트, 테스트, 스타일]
+tags: [샘플 포스트, 테스트, 스타일]
 comments: true
 share: true
 ---
