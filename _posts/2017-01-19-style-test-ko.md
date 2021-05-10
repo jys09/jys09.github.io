@@ -23,6 +23,25 @@ import pandas as pd
 iris = datasets.load_iris()
 ```
 
+### 붓꽃 데이터셋의 특성 1가지와 한가지 품종을 선택
+
+```css
+X = iris["data"][:, 3:]  # 1개의 특성 (꽃잎 너비)
+y = (iris["target"] == 2).astype(np.int)   # 버지니카 품종일 때
+```
+
+### 모든 샘플에 편향을 추가
+
+```css
+X_with_bias = np.c_[np.ones([len(X), 1]), X]
+```
+
+### 결과를 일정하게 유지하기 위한 랜덤 시드를 지정
+
+```css
+np.random.seed(2042)
+```
+
 ### 1-1. 제목 정렬
 
 ##### 왼쪽(기본)
