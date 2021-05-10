@@ -1,45 +1,377 @@
 ---
 layout: post
-title: "한글 문서 가독성 테스트"
-description: "한글로 된 문서의 가독성을 테스트합니다."
-date: 2017-01-19
-tags: [샘플 포스트, 가독성, 테스트]
+title: "4차과제 2번"
+description: "다중 클래스 분류 알고리즘 구현하기."
+date: 2021-05-11
 comments: true
 share: true
 ---
 
-정당의 목적이나 활동이 민주적 기본질서에 위배될 때에는 정부는 헌법재판소에 그 해산을 제소할 수 있고, 정당은 헌법재판소의 심판에 의하여 해산된다. 모든 국민은 고문을 받지 아니하며, 형사상 자기에게 불리한 진술을 강요당하지 아니한다. 새로운 회계연도가 개시될 때까지 예산안이 의결되지 못한 때에는 정부는 국회에서 예산안이 의결될 때까지 다음의 목적을 위한 경비는 전년도 예산에 준하여 집행할 수 있다.
+4차 과제2, 과제 1에서 구현된 로지스틱 회귀 알고리즘에 일대다(OvR) 방식을 적용하여 붓꽃에 대한 다중 클래스 분류 알고리즘을 구현하라. 단, 사이킷런을 전혀 사용하지 않아야 한다.
 
-외국인은 국제법과 조약이 정하는 바에 의하여 그 지위가 보장된다. 헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여 국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을 얻어야 한다. 대통령은 국가의 독립·영토의 보전·국가의 계속성과 헌법을 수호할 책무를 진다. 국회는 정부의 동의없이 정부가 제출한 지출예산 각항의 금액을 증가하거나 새 비목을 설치할 수 없다.
+--- 
+## 1. 데이터 준비하기
 
-# 대통령은 법률안의 일
+### 모듈 불러오기
 
-대통령은 필요하다고 인정할 때에는 외교·국방·통일 기타 국가안위에 관한 중요정책을 국민투표에 붙일 수 있다. 한 회계연도를 넘어 계속하여 지출할 필요가 있을 때에는 정부는 연한을 정하여 계속비로서 국회의 의결을 얻어야 한다. 제3항의 승인을 얻지 못한 때에는 그 처분 또는 명령은 그때부터 효력을 상실한다. 이 경우 그 명령에 의하여 개정 또는 폐지되었던 법률은 그 명령이 승인을 얻지 못한 때부터 당연히 효력을 회복한다.
+```
+import numpy as np
+form sklearn import datasets
+import pandas as pd
+iris = datasets.load_iris()
+```
 
-* 국무회의는 대통령·국무총리와 15인 이상 30인 이하의 국무위원으로 구성한다. 대통령은 국무총리·국무위원·행정각부의 장 기타 법률이 정하는 공사의 직을 겸할 수 없다.
-* 나는 헌법을 준수하고 국가를 보위하며 조국의 평화적 통일과 국민의 자유와 복리의 증진 및 민족문화의 창달에 노력하여 대통령으로서의 직책을 성실히 수행할 것을 국민 앞에 엄숙히 선서합니다.
-* 정당은 법률이 정하는 바에 의하여 국가의 보호를 받으며, 국가는 법률이 정하는 바에 의하여 정당운영에 필요한 자금을 보조할 수 있다. 이 헌법공포 당시의 국회의원의 임기는 제1항에 의한 국회의 최초의 집회일 전일까지로 한다.
-* 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 모든 국민은 고문을 받지 아니하며, 형사상 자기에게 불리한 진술을 강요당하지 아니한다.
+### 붓꽃 데이터셋의 특성 1가지와 한가지 품종을 선택
 
-## 국회의원은 국가이익
-체포·구속·압수 또는 수색을 할 때에는 적법한 절차에 따라 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다. 다만, 현행범인인 경우와 장기 3년 이상의 형에 해당하는 죄를 범하고 도피 또는 증거인멸의 염려가 있을 때에는 사후에 영장을 청구할 수 있다. 모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다. 감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 군인 또는 군무원이 아닌 국민은 대한민국의 영역안에서는 중대한 군사상 기밀·초병·초소·유독음식물공급·포로·군용물에 관한 죄중 법률이 정한 경우와 비상계엄이 선포된 경우를 제외하고는 군사법원의 재판을 받지 아니한다.
+```
+X = iris["data"][:, 3:]  # 1개의 특성 (꽃잎 너비)
+y = (iris["target"] == 2).astype(np.int)  # 모든 품종의 붓꽃
+```
 
-1. 대통령은 전시·사변 또는 이에 준하는 국가비상사태에 있어서 병력으로써 군사상의 필요에 응하거나 공공의 안녕질서를 유지할 필요가 있을 때에는 법률이 정하는 바에 의하여 계엄을 선포할 수 있다.
-2. 대통령은 국민의 보통·평등·직접·비밀선거에 의하여 선출한다. 대통령은 국무회의의 의장이 되고, 국무총리는 부의장이 된다. 대통령은 국가의 독립·영토의 보전·국가의 계속성과 헌법을 수호할 책무를 진다.
-3. 국민경제의 발전을 위한 중요정책의 수립에 관하여 대통령의 자문에 응하기 위하여 국민경제자문회의를 둘 수 있다. 대법원과 각급법원의 조직은 법률로 정한다.
-4. 모든 국민은 근로의 의무를 진다. 국가는 근로의 의무의 내용과 조건을 민주주의원칙에 따라 법률로 정한다. 국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다.
-5. 국민경제자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다. 법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여 심판한다. 누구든지 체포 또는 구속의 이유와 변호인의 조력을 받을 권리가 있음을 고지받지 아니하고는 체포 또는 구속을 당하지 아니한다. 체포 또는 구속을 당한 자의 가족등 법률이 정하는 자에게는 그 이유와 일시·장소가 지체없이 통지되어야 한다.
-6. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 법률안에 이의가 있을 때에는 대통령은 제1항의 기간내에 이의서를 붙여 국회로 환부하고, 그 재의를 요구할 수 있다. 국회의 폐회중에도 또한 같다.
+### 모든 샘플에 편향을 추가
 
-### 헌법재판소에서 법률
+```
+X_with_bias = np.c_[np.ones([len(X), 1]), X]
+```
 
-대한민국은 민주공화국이다. 국민경제의 발전을 위한 중요정책의 수립에 관하여 대통령의 자문에 응하기 위하여 국민경제자문회의를 둘 수 있다. 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 모든 국민은 신속한 재판을 받을 권리를 가진다. 형사피고인은 상당한 이유가 없는 한 지체없이 공개재판을 받을 권리를 가진다. 대법원장은 국회의 동의를 얻어 대통령이 임명한다. 대통령은 국민의 보통·평등·직접·비밀선거에 의하여 선출한다. 정당의 목적이나 활동이 민주적 기본질서에 위배될 때에는 정부는 헌법재판소에 그 해산을 제소할 수 있고, 정당은 헌법재판소의 심판에 의하여 해산된다.
+### 결과를 일정하게 유지하기 위한 랜덤 시드를 지정
 
-> 국가는 모성의 보호를 위하여 노력하여야 한다. 모든 국민은 학문과 예술의 자유를 가진다. 국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다. 국무위원은 국무총리의 제청으로 대통령이 임명한다. 국회의원은 법률이 정하는 직을 겸할 수 없다.
+```
+np.random.seed(2042)
+```
 
-#### 선거운동은 각급 선거
+--- 
+## 2. 데이터셋 분할
 
-대통령은 헌법과 법률이 정하는 바에 의하여 공무원을 임면한다. 군사법원의 조직·권한 및 재판관의 자격은 법률로 정한다. 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다. 모든 국민은 학문과 예술의 자유를 가진다. 국가는 과학기술의 혁신과 정보 및 인력의 개발을 통하여 국민경제의 발전에 노력하여야 한다. 모든 국민은 신체의 자유를 가진다. 누구든지 법률에 의하지 아니하고는 체포·구속·압수·수색 또는 심문을 받지 아니하며, 법률과 적법한 절차에 의하지 아니하고는 처벌·보안처분 또는 강제노역을 받지 아니한다. 학교교육 및 평생교육을 포함한 교육제도와 그 운영, 교육재정 및 교원의 지위에 관한 기본적인 사항은 법률로 정한다.
+### 데이터셋 분할 비율 설정
+
+```
+test_ratio = 0.2                                         # 테스트 세트 비율 = 20%
+validation_ratio = 0.2                                   # 검증 세트 비율 = 20%
+total_size = len(X_with_bias)                            # 전체 데이터셋 크기
+
+test_size = int(total_size * test_ratio)                 # 테스트 세트 크기: 전체의 20%
+validation_size = int(total_size * validation_ratio)     # 검증 세트 크기: 전체의 20%
+train_size = total_size - test_size - validation_size    # 훈련 세트 크기: 전체의 60%
+```
+
+### 인덱스 무작위로 섞기
+
+```
+rnd_indices = np.random.permutation(total_size)
+```
+
+### 6:2:2 비율로 훈련, 검증, 테스트 세트를 분할
+
+```
+X_train = X_with_bias[rnd_indices[:train_size]]
+y_train = y[rnd_indices[:train_size]]
+
+X_valid = X_with_bias[rnd_indices[train_size:-test_size]]
+y_valid = y[rnd_indices[train_size:-test_size]]
+
+X_test = X_with_bias[rnd_indices[-test_size:]]
+y_test = y[rnd_indices[-test_size:]]
+```
+
+--- 
+## 3. 타깃 변환
+타깃은 0, 1, 2로 설정되어 있다. 차례대로 세토사, 버시컬러, 버지니카 품종을 가리킨다. 훈련 세트의 첫 5개 샘플의 품종은 다음과 같다.
+
+```
+y_train[:5]
+```
+array([0, 1, 2, 1, 1])
+
+학습을 위해 타깃을 원-핫 벡터로 변환해야 함. 이유는 소프트맥스 회귀는 샘플이 주어지면 각 클래스별로 속할 확률을 구하고 구해진 결과를 실제 확률과 함께 이용하여 비용함수를 계산하기 때문   
+
+붓꽃 데이터의 경우 세 개의 품종 클래스별로 속할 확률을 계산해야 하기 때문에 품종을 0, 1, 2 등의 하나의 숫자로 두기 보다는 해당 클래스는 1, 나머지는 0인 확률값으로 이루어진 어레이로 다루어야 구현한 알고리즘이 계산한 클래스별 확률과 연결   
+
+아래 함수 to_one_hot() 함수는 길이가 m이면서 0, 1, 2로 이루어진 1차원 어레이가 입력되면 (m, 3) 모양의 원-핫 벡터를 반환.   
+
+```python
+def to_one_hot(y):
+    n_classes = y.max() + 1                 # 클래스 수
+    m = len(y)                              # 샘플 수
+    Y_one_hot = np.zeros((m, n_classes))    # (샘플 수, 클래스 수) 0-벡터 생성
+    Y_one_hot[np.arange(m), y] = 1          # 샘플 별로 해당 클래스의 값만 1로 변경. (넘파이 인덱싱 활용)
+    return Y_one_hot
+```
+샘플 5개에 대하여 잘 작동하는 것을 확인 가능
+
+```
+y_train[:5]
+```
+array([0, 1, 2, 1, 1])
+
+```
+to_one_hot(y_train[:5])
+```
+array([[1., 0., 0.],   
+       [0., 1., 0.],   
+       [0., 0., 1.],   
+       [0., 1., 0.],   
+       [0., 1., 0.]])   
+
+이제 훈련, 검증, 테스트 세트의 타깃을 모두 원-핫 벡터로 변환
+
+```
+Y_train_one_hot = to_one_hot(y_train)
+Y_valid_one_hot = to_one_hot(y_valid)
+Y_test_one_hot = to_one_hot(y_test)
+```
+
+Y_train_ont_hot은 90x3 행렬, 각 열에는   
+* 0 : 세토사(Iris-Setosa)
+* 1 : 버시컬러(Iris-Versicolor)
+* 2 : 버지니카(Iris-Virginica)
+에 대한 정보가 true 일 경우 1로, false 일 경우 0으로 저장되어 있음.   
+각 붓꽃의 품종에 대해 일대다(OVR)방식으로 로지스틱회귀를 취하기 위해선 각 열을 분리시켜 주어야 함
+
+```
+Setosa_train_one_hot = Y_train_one_hot[:,0]
+Versicolor_train_one_hot = Y_train_one_hot[:,1]
+Virginica_train_one_hot = Y_train_one_hot[:,2]
+
+Setosa_valid_one_hot = Y_valid_one_hot[:,0]
+Versicolor_valid_one_hot = Y_valid_one_hot[:,1]
+Virginica_valid_one_hot = Y_valid_one_hot[:,2]
+
+Setosa_test_one_hot = Y_test_one_hot[:,0]
+Versicolor_test_one_hot = Y_test_one_hot[:,1]
+Virginica_test_one_hot = Y_test_one_hot[:,2]
+```
+
+각 원-핫 벡터들을 mx1 행렬로 reshape, 이유는 행렬의 곱 연산을 할 때 행렬의 크기를 맞춰주기 위함
+
+```
+Setosa_train_one_hot = Setosa_train_one_hot.reshape(90,1)
+Versicolor_train_one_hot = Versicolor_train_one_hot.reshape(90,1)
+Virginica_train_one_hot = Virginica_train_one_hot.reshape(90,1)
+
+Setosa_valid_one_hot = Setosa_valid_one_hot.reshape(30,1)
+Versicolor_valid_one_hot = Versicolor_valid_one_hot.reshape(30,1)
+Virginica_valid_one_hot = Virginica_valid_one_hot.reshape(30,1)
+
+Setosa_test_one_hot = Setosa_test_one_hot.reshape(30,1)
+Versicolor_test_one_hot = Versicolor_test_one_hot.reshape(30,1)
+Virginica_test_one_hot = Virginica_test_one_hot.reshape(30,1)
+```
+
+--- 
+## 4. 로지스틱 함수 구현
+
+```python
+def logistic_sigmoid(x): # 시그모이드 함수 정의
+    return 1 / (1 + np.exp(-x))
+```
+
+--- 
+## 5. 경사하강법 활용 훈련
+
+```
+n_inputs = X_train.shape[1]           # 특성 수(n) + 1, 붓꽃의 경우: 특성 2개 + 1
+n_outputs = len(np.unique(y_train))   # 중복을 제거한 클래스 수(K), 붓꽃의 경우: 3개
+```
+
+### 파라미터를 무작위로 초기 설정
+
+```
+Theta = np.random.randn(n_inputs, 1)
+```
+
+### 배치경사하강법 구현
+
+```
+eta = 0.01
+n_iterations = 5001
+m = len(X_train)
+epsilon = 1e-7
+y_train = y_train.reshape(90,1)
+
+for iteration in range(n_iterations):     # 5001번 반복 훈련
+    logits = X_train.dot(Theta)
+    Y_proba = logistic_sigmoid(logits)
+    
+    if iteration % 500 == 0:              # 500 에포크마다 손실(비용) 계산해서 출력
+        loss = -1/m*(np.sum(y_train * np.log(Y_proba + epsilon) + (1 - y_train) * np.log(1 - Y_proba + epsilon)))
+        print(iteration, loss)
+
+    Y_proba = np.where(Y_proba >= 0.5, 1, 0)
+    #print(Y_proba)
+    
+    error = Y_proba - y_train     # 그레이디언트 계산.
+    #print(error)
+    gradients = 1/m * X_train.T.dot(error)
+    
+    Theta = Theta - eta * gradients       # 파라미터 업데이트
+```
+0 0.7367920641625514   
+500 0.6913052093118407   
+1000 0.6914566500022249   
+1500 0.6913969427170582   
+2000 0.6915484030341011   
+2500 0.6914886904050195   
+3000 0.6914289977295667   
+3500 0.6913583974477105   
+4000 0.6915098561489456   
+4500 0.6914501370427001   
+5000 0.6913904378900846   
+
+### 학습된 파라미터
+
+```
+Theta
+```
+###
+array([[-0.00836306],
+       [ 0.00500979]])
+
+### 배치경사하강법에 대한 정확성 점수 계산
+
+```
+logits = X_valid.dot(Theta)              
+Y_proba = logistic_sigmoid(logits)
+Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
+y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+
+y_valid = y_valid.reshape(30,1)
+
+accuracy_score = np.mean(y_predict == y_valid)  # 정확도 계산
+accuracy_score
+```
+0.9666666666666667
+
+--- 
+## 5. 규제가 추가된 경사하강법 활용 훈련
+
+```
+eta = 0.1
+n_iterations = 5001
+m = len(X_train)
+epsilon = 1e-7
+alpha = 0.1        # 규제 하이퍼파라미터
+y_train = y_train.reshape(90,1)
+
+Theta = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
+
+for iteration in range(n_iterations):
+    logits = X_train.dot(Theta)
+    Y_proba = logistic_sigmoid(logits)
+    
+    if iteration % 500 == 0:
+        xentropy_loss = -1/m*(np.sum(y_train * np.log(Y_proba + epsilon) + (1 - y_train) * np.log(1 - Y_proba + epsilon)))
+        l2_loss = 1/2 * np.sum(np.square(Theta[1:]))  # 편향은 규제에서 제외
+        loss = xentropy_loss + alpha * l2_loss        # l2 규제가 추가된 손실
+        print(iteration, loss)
+    
+    error = Y_proba - y_train
+    l2_loss_gradients = np.r_[np.zeros([1, 1]), alpha * Theta[1:]]   # l2 규제 그레이디언트
+    gradients = 1/m * X_train.T.dot(error) + l2_loss_gradients
+    
+    Theta = Theta - eta * gradients
+```
+0 0.6618882978672164   
+500 0.46565264086886404   
+1000 0.4649817170971969   
+1500 0.4649761853058078   
+2000 0.4649761373560999   
+2500 0.46497613693929357   
+3000 0.46497613693573697   
+3500 0.46497613693571294   
+4000 0.4649761369357133   
+4500 0.46497613693571344   
+5000 0.4649761369357135   
+
+### 규제가 추가된 경사하강법에 대한 정확성 점수
+
+```
+logits = X_valid.dot(Theta)
+Y_proba = logistic_sigmoid(logits)
+Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
+y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+
+accuracy_score = np.mean(y_predict == y_valid)
+accuracy_score
+```
+0.9
+
+--- 
+## 6. 조기 종료 추가
+
+```
+eta = 0.005
+n_iterations = 5001
+m = len(X_train)
+epsilon = 1e-7
+alpha = 0.1            # 규제 하이퍼파라미터
+best_loss = np.infty   # 최소 손실값 기억 변수
+
+Theta = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
+
+for iteration in range(n_iterations):
+    # 훈련 및 손실 계산
+    logits = X_train.dot(Theta)
+    Y_proba = logistic_sigmoid(logits)
+    error = Y_proba - y_train
+    gradients = 1/m * X_train.T.dot(error) + np.r_[np.zeros([1, 1]), alpha * Theta[1:]]
+    Theta = Theta - eta * gradients
+
+    # 검증 세트에 대한 손실 계산
+    logits = X_valid.dot(Theta)
+    Y_proba_veri = logistic_sigmoid(logits)
+    xentropy_loss = -1/m*(np.sum(y_valid * np.log(Y_proba_veri + epsilon) + (1 - y_valid) * np.log(1 - Y_proba_veri + epsilon)))
+    l2_loss = 1/2 * np.sum(np.square(Theta[1:]))
+    loss = xentropy_loss + alpha * l2_loss
+    
+    # 500 에포크마다 검증 세트에 대한 손실 출력
+    if iteration % 500 == 0:
+        print(iteration, loss)
+        
+    # 에포크마다 최소 손실값 업데이트
+    if loss < best_loss:
+        best_loss = loss
+    else:                                      # 에포크가 줄어들지 않으면 바로 훈련 종료
+        print(iteration - 1, best_loss)        # 종료되지 이전 에포크의 손실값 출력
+        print(iteration, loss, "조기 종료!")
+        break
+```
+0 0.3316323837797527   
+500 0.20318737444537002   
+1000 0.19243960621537481   
+1500 0.1880646732824296   
+2000 0.1861265275676014   
+2395 0.18574640481491134   
+2396 0.18574640666650474 조기 종료!
+
+### 조기종료가 추가된 검증세트에 대한 정확도 점수 계산
+
+```
+logits = X_valid.dot(Theta)
+Y_proba = logistic_sigmoid(logits)
+Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
+y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+
+accuracy_score = np.mean(y_predict == y_valid)
+accuracy_score
+```
+0.9
+
+--- 
+## 7. 테스트 세트 평가
+
+```
+logits = X_test.dot(Theta)
+Y_proba = logistic_sigmoid(logits)
+Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
+y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+
+y_test = y_test.reshape(30,1)
+
+accuracy_score = np.mean(y_predict == y_test)
+accuracy_score
+```
+0.9
 
 --- 
 
