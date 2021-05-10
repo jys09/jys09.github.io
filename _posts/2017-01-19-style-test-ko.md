@@ -1,30 +1,25 @@
 ---
 layout: post
-title: "한글 문서 스타일 샘플"
-description: "한글로 된 글의 샘플입니다."
-date: 2017-01-19
-tags: [샘플 포스트, 테스트, 스타일]
+title: "4차과제 1번"
+description: "로지스틱 회귀를 구현하기."
+date: 2021-05-11
+*/tags: [샘플 포스트, 테스트, 스타일]
 comments: true
 share: true
 ---
 
-이 글은 스타일을 모아둔 것입니다. 소스 코드를 확인하여 스타일을 적용하는 방법을 알아보세요.
+4차 과제1, 조기 종료를 사용한 배치 경사 하강법으로 로지스틱 회귀를 구현하라. 단, 사이킷런을 전혀 사용하지 않아야 한다.
 
 --- 
 
-## 1. 제목
+## 1. 데이터 준비하기
 
-# 제목 1
+### 모듈 불러오기
 
-## 제목 2
-
-### 제목 3
-
-#### 제목 4
-
-##### 제목 5
-
-###### 제목 6
+import numpy as np
+form sklearn import datasets
+import pandas as pd
+iris = datasets.load_iris()
 
 ### 1-1. 제목 정렬
 
