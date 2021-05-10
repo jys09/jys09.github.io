@@ -167,161 +167,38 @@ def logistic_sigmoid(x): # 시그모이드 함수 정의
 ```
 
 --- 
-## 5. 경사하강법 활용 훈련
+## 5. 활용 훈련
 
 ```
-n_inputs = X_train.shape[1]           # 특성 수(n) + 1, 붓꽃의 경우: 특성 2개 + 1
-n_outputs = len(np.unique(y_train))   # 중복을 제거한 클래스 수(K), 붓꽃의 경우: 3개
+n_inputs = X_train.shape[1]
+n_outputs = len(np.unique(y_train))
 ```
 
-### 파라미터를 무작위로 초기 설정
+### 0: 세토사(Iris-Setosa) 품종에 대한 조기 종료 활용
 
 ```
-Theta = np.random.randn(n_inputs, 1)
-```
-
-### 배치경사하강법 구현
-
-```
-eta = 0.01
+eta = 0.08
 n_iterations = 5001
 m = len(X_train)
 epsilon = 1e-7
-y_train = y_train.reshape(90,1)
-
-for iteration in range(n_iterations):     # 5001번 반복 훈련
-    logits = X_train.dot(Theta)
-    Y_proba = logistic_sigmoid(logits)
-    
-    if iteration % 500 == 0:              # 500 에포크마다 손실(비용) 계산해서 출력
-        loss = -1/m*(np.sum(y_train * np.log(Y_proba + epsilon) + (1 - y_train) * np.log(1 - Y_proba + epsilon)))
-        print(iteration, loss)
-
-    Y_proba = np.where(Y_proba >= 0.5, 1, 0)
-    #print(Y_proba)
-    
-    error = Y_proba - y_train     # 그레이디언트 계산.
-    #print(error)
-    gradients = 1/m * X_train.T.dot(error)
-    
-    Theta = Theta - eta * gradients       # 파라미터 업데이트
-```
-0 0.7367920641625514   
-500 0.6913052093118407   
-1000 0.6914566500022249   
-1500 0.6913969427170582   
-2000 0.6915484030341011   
-2500 0.6914886904050195   
-3000 0.6914289977295667   
-3500 0.6913583974477105   
-4000 0.6915098561489456   
-4500 0.6914501370427001   
-5000 0.6913904378900846   
-
-### 학습된 파라미터
-
-```
-Theta
-```
-###
-array([[-0.00836306],
-       [ 0.00500979]])
-
-### 배치경사하강법에 대한 정확성 점수 계산
-
-```
-logits = X_valid.dot(Theta)              
-Y_proba = logistic_sigmoid(logits)
-Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
-y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
-
-y_valid = y_valid.reshape(30,1)
-
-accuracy_score = np.mean(y_predict == y_valid)  # 정확도 계산
-accuracy_score
-```
-0.9666666666666667
-
---- 
-## 5. 규제가 추가된 경사하강법 활용 훈련
-
-```
-eta = 0.1
-n_iterations = 5001
-m = len(X_train)
-epsilon = 1e-7
-alpha = 0.1        # 규제 하이퍼파라미터
-y_train = y_train.reshape(90,1)
-
-Theta = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
-
-for iteration in range(n_iterations):
-    logits = X_train.dot(Theta)
-    Y_proba = logistic_sigmoid(logits)
-    
-    if iteration % 500 == 0:
-        xentropy_loss = -1/m*(np.sum(y_train * np.log(Y_proba + epsilon) + (1 - y_train) * np.log(1 - Y_proba + epsilon)))
-        l2_loss = 1/2 * np.sum(np.square(Theta[1:]))  # 편향은 규제에서 제외
-        loss = xentropy_loss + alpha * l2_loss        # l2 규제가 추가된 손실
-        print(iteration, loss)
-    
-    error = Y_proba - y_train
-    l2_loss_gradients = np.r_[np.zeros([1, 1]), alpha * Theta[1:]]   # l2 규제 그레이디언트
-    gradients = 1/m * X_train.T.dot(error) + l2_loss_gradients
-    
-    Theta = Theta - eta * gradients
-```
-0 0.6618882978672164   
-500 0.46565264086886404   
-1000 0.4649817170971969   
-1500 0.4649761853058078   
-2000 0.4649761373560999   
-2500 0.46497613693929357   
-3000 0.46497613693573697   
-3500 0.46497613693571294   
-4000 0.4649761369357133   
-4500 0.46497613693571344   
-5000 0.4649761369357135   
-
-### 규제가 추가된 경사하강법에 대한 정확성 점수
-
-```
-logits = X_valid.dot(Theta)
-Y_proba = logistic_sigmoid(logits)
-Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
-y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
-
-accuracy_score = np.mean(y_predict == y_valid)
-accuracy_score
-```
-0.9
-
---- 
-## 6. 조기 종료 추가
-
-```
-eta = 0.005
-n_iterations = 5001
-m = len(X_train)
-epsilon = 1e-7
-alpha = 0.1            # 규제 하이퍼파라미터
+alpha = 0.005            # 규제 하이퍼파라미터
 best_loss = np.infty   # 최소 손실값 기억 변수
 
-Theta = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
+Theta1 = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
 
 for iteration in range(n_iterations):
     # 훈련 및 손실 계산
-    logits = X_train.dot(Theta)
+    logits = X_train.dot(Theta1)
     Y_proba = logistic_sigmoid(logits)
-    error = Y_proba - y_train
-    gradients = 1/m * X_train.T.dot(error) + np.r_[np.zeros([1, 1]), alpha * Theta[1:]]
-    Theta = Theta - eta * gradients
+    error = Y_proba - Setosa_train_one_hot
+    gradients = 1/m * X_train.T.dot(error) + np.r_[np.zeros([1, 1]), alpha * Theta1[1:]]
+    Theta1 = Theta1 - eta * gradients
 
     # 검증 세트에 대한 손실 계산
-    logits = X_valid.dot(Theta)
+    logits = X_valid.dot(Theta1)
     Y_proba_veri = logistic_sigmoid(logits)
-    xentropy_loss = -1/m*(np.sum(y_valid * np.log(Y_proba_veri + epsilon) + (1 - y_valid) * np.log(1 - Y_proba_veri + epsilon)))
-    l2_loss = 1/2 * np.sum(np.square(Theta[1:]))
+    xentropy_loss = -1/m*(np.sum(Setosa_valid_one_hot * np.log(Y_proba_veri + epsilon) + (1 - Setosa_valid_one_hot) * np.log(1 - Y_proba_veri + epsilon)))
+    l2_loss = 1/2 * np.sum(np.square(Theta1[1:]))
     loss = xentropy_loss + alpha * l2_loss
     
     # 500 에포크마다 검증 세트에 대한 손실 출력
@@ -336,21 +213,114 @@ for iteration in range(n_iterations):
         print(iteration, loss, "조기 종료!")
         break
 ```
-0 0.3316323837797527   
-500 0.20318737444537002   
-1000 0.19243960621537481   
-1500 0.1880646732824296   
-2000 0.1861265275676014   
-2395 0.18574640481491134   
-2396 0.18574640666650474 조기 종료!
+0 0.1942305470183407   
+500 0.0713123891503352   
+694 0.07012518581596847   
+695 0.0701251934308839 조기 종료!   
 
-### 조기종료가 추가된 검증세트에 대한 정확도 점수 계산
+### 1: 버시컬러(Iris-Versicolor) 품종에 대한 조기 종료 활용
 
 ```
-logits = X_valid.dot(Theta)
-Y_proba = logistic_sigmoid(logits)
-Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
-y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+eta = 0.07
+n_iterations = 5001
+m = len(X_train)
+epsilon = 1e-7
+alpha = 0.005          # 규제 하이퍼파라미터
+best_loss = np.infty   # 최소 손실값 기억 변수
+
+Theta2 = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
+
+for iteration in range(n_iterations):
+    # 훈련 및 손실 계산
+    logits = X_train.dot(Theta2)
+    Y_proba = logistic_sigmoid(logits)
+    error = Y_proba - Versicolor_train_one_hot
+    gradients = 1/m * X_train.T.dot(error) + np.r_[np.zeros([1, 1]), alpha * Theta2[1:]]
+    Theta2 = Theta2 - eta * gradients
+
+    # 검증 세트에 대한 손실 계산
+    logits = X_valid.dot(Theta2)
+    Y_proba_veri = logistic_sigmoid(logits)
+    xentropy_loss = -1/m*(np.sum(Versicolor_valid_one_hot * np.log(Y_proba_veri + epsilon) + (1 - Versicolor_valid_one_hot) * np.log(1 - Y_proba_veri + epsilon)))
+    l2_loss = 1/2 * np.sum(np.square(Theta2[1:]))
+    loss = xentropy_loss + alpha * l2_loss
+    
+    # 500 에포크마다 검증 세트에 대한 손실 출력
+    if iteration % 500 == 0:
+        print(iteration, loss)
+        
+    # 에포크마다 최소 손실값 업데이트
+    if loss < best_loss:
+        best_loss = loss
+    else:                                      # 에포크가 줄어들지 않으면 바로 훈련 종료
+        print(iteration - 1, best_loss)        # 종료되지 이전 에포크의 손실값 출력
+        print(iteration, loss, "조기 종료!")
+        break
+```
+0 0.3724096545512761   
+367 0.218993700746672   
+368 0.21899372701315967 조기 종료!   
+
+### 2: 버지니카(Iris-Virginica) 품종에 대한 조기 종료 활용
+
+```
+eta = 0.08
+n_iterations = 5001
+m = len(X_train)
+epsilon = 1e-7
+alpha = 0.005        # 규제 하이퍼파라미터
+best_loss = np.infty   # 최소 손실값 기억 변수
+
+Theta3 = np.random.randn(n_inputs, 1)  # 파라미터 새로 초기화
+
+for iteration in range(n_iterations):
+    # 훈련 및 손실 계산
+    logits = X_train.dot(Theta3)
+    Y_proba = logistic_sigmoid(logits)
+    error = Y_proba - Virginica_train_one_hot
+    gradients = 1/m * X_train.T.dot(error) + np.r_[np.zeros([1, 1]), alpha * Theta3[1:]]
+    Theta3 = Theta3 - eta * gradients
+
+    # 검증 세트에 대한 손실 계산
+    logits = X_valid.dot(Theta3)
+    Y_proba_veri = logistic_sigmoid(logits)
+    xentropy_loss = -1/m*(np.sum(Virginica_valid_one_hot * np.log(Y_proba_veri + epsilon) + (1 - Virginica_valid_one_hot) * np.log(1 - Y_proba_veri + epsilon)))
+    l2_loss = 1/2 * np.sum(np.square(Theta3[1:]))
+    loss = xentropy_loss + alpha * l2_loss
+    
+    # 500 에포크마다 검증 세트에 대한 손실 출력
+    if iteration % 500 == 0:
+        print(iteration, loss)
+        
+    # 에포크마다 최소 손실값 업데이트
+    if loss < best_loss:
+        best_loss = loss
+    else:                                      # 에포크가 줄어들지 않으면 바로 훈련 종료
+        print(iteration - 1, best_loss)        # 종료되지 이전 에포크의 손실값 출력
+        print(iteration, loss, "조기 종료!")
+        break
+```
+0 0.30051317265766586   
+500 0.11440446122769776   
+1000 0.10241684411484213   
+1500 0.09958112692021259   
+1820 0.09926349977734265   
+1821 0.09926350015409136 조기 종료!   
+
+### 조기종료 검증세트에 대한 정확도 검사
+
+```
+logits_Setosa = X_valid.dot(Theta1)
+logits_Versicolor = X_valid.dot(Theta2)
+logits_Virginica = X_valid.dot(Theta3)
+
+Y_proba_Setosa = logistic_sigmoid(logits_Setosa)
+Y_proba_Versicolor = logistic_sigmoid(logits_Versicolor)
+Y_proba_Virginica = logistic_sigmoid(logits_Virginica)
+
+Y_proba = np.hstack((Y_proba_Setosa, Y_proba_Versicolor, Y_proba_Virginica)) # 각 품종을 하나의 행렬로 합침
+
+y_predict = np.argmax(Y_proba, axis=1)    # 가장 높은 확률을 갖는 클래스 선택
 
 accuracy_score = np.mean(y_predict == y_valid)
 accuracy_score
@@ -358,21 +328,25 @@ accuracy_score
 0.9
 
 --- 
-## 7. 테스트 세트 평가
+## 6. 테스트 세트 평가
 
 ```
-logits = X_test.dot(Theta)
-Y_proba = logistic_sigmoid(logits)
-Y_proba_1 = np.where(Y_proba >= 0.5, 1,0)
-y_predict = Y_proba_1         # 가장 높은 확률을 갖는 클래스 선택
+logits_Setosa = X_test.dot(Theta1)
+logits_Versicolor = X_test.dot(Theta2)
+logits_Virginica = X_test.dot(Theta3)
 
-y_test = y_test.reshape(30,1)
+Y_proba_Setosa = logistic_sigmoid(logits_Setosa)
+Y_proba_Versicolor = logistic_sigmoid(logits_Versicolor)
+Y_proba_Virginica = logistic_sigmoid(logits_Virginica)
+
+Y_proba = np.hstack((Y_proba_Setosa, Y_proba_Versicolor, Y_proba_Virginica)) # 각 품종을 하나의 행렬로 합침
+
+y_predict = np.argmax(Y_proba, axis=1)    # 가장 높은 확률을 갖는 클래스 선택
 
 accuracy_score = np.mean(y_predict == y_test)
 accuracy_score
 ```
-0.9
+0.9333333333333333
 
 --- 
-
 이 문서는 [한글 Lorem Ipsum](http://guny.kr/stuff/klorem/)으로 생성되었습니다.
