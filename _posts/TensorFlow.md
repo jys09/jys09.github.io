@@ -1,3 +1,15 @@
+---
+layout: post
+title: "TensorFlow"
+description: "TensorFlow 내용정리."
+date: 2021-05-11
+comments: true
+share: true
+---
+
+https://www.tensorflow.org/guide/tensor 해당 링크에 있는 TensorFlow 내용을 공부하고 정리해보자.
+
+--- 
 # 텐서
 
 텐서(tensor)는 일관된 유형을 가진 다차원 배열(= dtype). 
