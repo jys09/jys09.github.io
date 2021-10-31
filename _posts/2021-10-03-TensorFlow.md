@@ -2,7 +2,7 @@
 layout: post
 title: "TensorFlow"
 description: "TensorFlow 내용정리."
-date: 2021-05-11
+date: 2021-10-03
 comments: true
 share: true
 ---
